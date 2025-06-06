@@ -1,0 +1,8 @@
+
+faster-whisper
+sounddevice
+soundfile
+gradio
+requests
+python-dotenv
+TTS==0.22.0
