@@ -1,24 +1,24 @@
-from torch.serialization import add_safe_globals
+"""Text-to-speech helper using XTTS."""
+
+from __future__ import annotations
+
 import torch
+from torch.serialization import add_safe_globals
+from TTS.api import TTS
+from TTS.config.shared_configs import BaseDatasetConfig
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import XttsAudioConfig, XttsArgs
-from TTS.config.shared_configs import BaseDatasetConfig
-from TTS.api import TTS
 
-# Allowlist required config classes to avoid UnpicklingError
+# Allowlist necessary configs for safe torch unpickling
 add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-tts = TTS(
-    model_name="tts_models/multilingual/multi-dataset/xtts_v2",
-).to(device)
+# Keep a module-level object to allow easy mocking in tests
+tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2").to(DEVICE)
 
 
-def text_to_speech(text, output_path="output.wav"):
-    tts.tts_to_file(
-        text=text,
-        speaker_wav=None,
-        language="en",
-        file_path=output_path,
-    )
+def text_to_speech(text: str, output_path: str = "output.wav") -> None:
+    """Convert ``text`` to spoken audio saved at ``output_path``."""
+
+    tts.tts_to_file(text=text, speaker_wav=None, language="en", file_path=output_path)
