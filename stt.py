@@ -1,7 +1,7 @@
-
 from faster_whisper import WhisperModel
 
 model = WhisperModel("medium", device="cuda")
+
 
 def transcribe(audio_path):
     segments, _ = model.transcribe(audio_path)
