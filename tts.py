@@ -2,9 +2,10 @@ import torch
 from torch.serialization import add_safe_globals
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import XttsAudioConfig
+from TTS.config.shared_configs import BaseDatasetConfig
 
 # Allowlist required config classes to avoid UnpicklingError
-add_safe_globals([XttsConfig, XttsAudioConfig])
+add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig])
 
 from TTS.api import TTS
 
