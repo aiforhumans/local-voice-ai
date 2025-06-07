@@ -33,6 +33,10 @@ torch_mock.serialization = serialization_module
 sys.modules['torch'] = torch_mock
 sys.modules['torch.serialization'] = serialization_module
 
+shared_configs_module = types.ModuleType('TTS.config.shared_configs')
+shared_configs_module.BaseDatasetConfig = MagicMock()
+sys.modules['TTS.config.shared_configs'] = shared_configs_module
+
 TTS_module = types.ModuleType('TTS')
 sys.modules['TTS'] = TTS_module
 TTS_tts = types.ModuleType('TTS.tts')
