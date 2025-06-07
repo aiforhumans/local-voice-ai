@@ -46,6 +46,7 @@ configs_module.XttsConfig = MagicMock()
 sys.modules["TTS.tts.configs.xtts_config"] = configs_module
 models_module = types.ModuleType("TTS.tts.models.xtts")
 models_module.XttsAudioConfig = MagicMock()
+models_module.XttsArgs = MagicMock()
 sys.modules["TTS.tts.models.xtts"] = models_module
 api_module = types.ModuleType("TTS.api")
 api_module.TTS = MagicMock()
