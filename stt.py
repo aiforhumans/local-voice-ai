@@ -1,11 +1,26 @@
-from faster_whisper import WhisperModel
+"""Speech-to-text utilities using Faster Whisper."""
+
+from __future__ import annotations
+
 import torch
-device = "cuda" if torch.cuda.is_available() else "cpu"
+from faster_whisper import WhisperModel
 
-model = WhisperModel("medium", device=device)
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def transcribe(audio_path):
+def _load_model() -> WhisperModel:
+    """Load and return the Whisper model."""
+
+    return WhisperModel("medium", device=DEVICE)
+
+
+# Keep a module-level reference so tests can patch it easily
+model = _load_model()
+
+
+def transcribe(audio_path: str) -> str:
+    """Transcribe an audio file into text."""
+
     segments, _ = model.transcribe(audio_path)
-    full_text = " ".join([segment.text for segment in segments])
-    return full_text
+    texts = [seg.text.strip() for seg in segments if seg.text]
+    return " ".join(texts)
