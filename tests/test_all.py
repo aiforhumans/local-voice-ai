@@ -30,6 +30,7 @@ torch_mock = types.ModuleType("torch")
 serialization_module = types.ModuleType("torch.serialization")
 serialization_module.add_safe_globals = MagicMock()
 torch_mock.serialization = serialization_module
+torch_mock.cuda = types.SimpleNamespace(is_available=MagicMock(return_value=False))
 sys.modules["torch"] = torch_mock
 sys.modules["torch.serialization"] = serialization_module
 

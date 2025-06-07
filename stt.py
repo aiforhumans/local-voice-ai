@@ -1,6 +1,8 @@
 from faster_whisper import WhisperModel
+import torch
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model = WhisperModel("medium", device="cuda")
+model = WhisperModel("medium", device=device)
 
 
 def transcribe(audio_path):
